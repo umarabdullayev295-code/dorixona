@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCare - Hisobotlar</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo"><i class="fas fa-clinic-medical"></i> Pharma<span>Care</span></a>
+        <div class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Bosh sahifa</a></li>
+            <li><a href="medicines.html">Dorilar</a></li>
+            <li><a href="sales.html">Sotuv</a></li>
+            <li><a href="reports.html" class="active">Hisobotlar</a></li>
+            <li class="mobile-only-btn"><a href="login.html" class="btn-outline" style="display:inline-block;text-decoration:none;margin-top:1rem;"><i class="fas fa-user-circle"></i> Kirish</a></li>
+        </ul>
+        <a href="login.html" class="btn-outline desktop-only-btn"><i class="fas fa-user-circle"></i> Kirish</a>
+    </nav>
+
+    <main class="page-section">
+        <div class="page-header">
+            <h1>Moliyaviy <span class="gradient-text">Hisobotlar</span></h1>
+            <p>Oylik va kunlik sotuv statistikasi, eng ko'p sotiladigan dorilar va foyda tahlili</p>
+        </div>
+
+        <!-- Summary KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card glass-panel">
+                <div class="kpi-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="kpi-info">
+                    <p>Oylik daromad</p>
+                    <h2>48,200,000 <small>so'm</small></h2>
+                    <span class="kpi-change up"><i class="fas fa-arrow-up"></i> +12% o'tgan oyga nisbatan</span>
+                </div>
+            </div>
+            <div class="kpi-card glass-panel">
+                <div class="kpi-icon" style="background:linear-gradient(135deg,#10b981,#059669)">
+                    <i class="fas fa-shopping-basket"></i>
+                </div>
+                <div class="kpi-info">
+                    <p>Jami sotuvlar</p>
+                    <h2>1,240 <small>dona</small></h2>
+                    <span class="kpi-change up"><i class="fas fa-arrow-up"></i> +8% o'tgan oyga nisbatan</span>
+                </div>
+            </div>
+            <div class="kpi-card glass-panel">
+                <div class="kpi-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="kpi-info">
+                    <p>O'rtacha chek</p>
+                    <h2>38,870 <small>so'm</small></h2>
+                    <span class="kpi-change down"><i class="fas fa-arrow-down"></i> -3% o'tgan oyga nisbatan</span>
+                </div>
+            </div>
+            <div class="kpi-card glass-panel">
+                <div class="kpi-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <div class="kpi-info">
+                    <p>Tugagan mahsulotlar</p>
+                    <h2>5 <small>ta</small></h2>
+                    <span class="kpi-change down"><i class="fas fa-exclamation"></i> Zudlik bilan to'ldiring</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bar Chart (CSS-only visual) -->
+        <div class="report-grid">
+            <div class="glass-panel report-chart-panel">
+                <h3><i class="fas fa-chart-bar" style="color:#6366f1;"></i> Oylik Sotuv Grafigi (so'm)</h3>
+                <div class="bar-chart">
+                    <div class="bar-item">
+                        <div class="bar" style="height:55%;background:linear-gradient(to top,#6366f1,#a5b4fc)"></div>
+                        <span>Yan</span>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar" style="height:70%;background:linear-gradient(to top,#6366f1,#a5b4fc)"></div>
+                        <span>Fev</span>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar" style="height:60%;background:linear-gradient(to top,#6366f1,#a5b4fc)"></div>
+                        <span>Mar</span>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar" style="height:80%;background:linear-gradient(to top,#6366f1,#a5b4fc)"></div>
+                        <span>Apr</span>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar active" style="height:100%;background:linear-gradient(to top,#ec4899,#f9a8d4)"></div>
+                        <span style="color:#f9a8d4;font-weight:600;">May</span>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar" style="height:45%;background:linear-gradient(to top,#6366f1,#a5b4fc)"></div>
+                        <span>Iyn</span>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar" style="height:65%;background:linear-gradient(to top,#6366f1,#a5b4fc)"></div>
+                        <span>Iyl</span>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar" style="height:75%;background:linear-gradient(to top,#6366f1,#a5b4fc)"></div>
+                        <span>Avg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel report-top-panel">
+                <h3><i class="fas fa-trophy" style="color:#fbbf24;"></i> Eng Ko'p Sotiladigan Dorilar</h3>
+                <div class="top-meds-list">
+                    <div class="top-med-item">
+                        <span class="top-rank gold">1</span>
+                        <div class="top-med-info">
+                            <strong>Paracetamol 500mg</strong>
+                            <div class="progress-bar"><div style="width:92%;background:linear-gradient(90deg,#6366f1,#ec4899)"></div></div>
+                        </div>
+                        <span class="top-med-count">920 dona</span>
+                    </div>
+                    <div class="top-med-item">
+                        <span class="top-rank silver">2</span>
+                        <div class="top-med-info">
+                            <strong>Ibuprofen 400mg</strong>
+                            <div class="progress-bar"><div style="width:74%;background:linear-gradient(90deg,#6366f1,#ec4899)"></div></div>
+                        </div>
+                        <span class="top-med-count">740 dona</span>
+                    </div>
+                    <div class="top-med-item">
+                        <span class="top-rank bronze">3</span>
+                        <div class="top-med-info">
+                            <strong>Vitamin C 1000mg</strong>
+                            <div class="progress-bar"><div style="width:61%;background:linear-gradient(90deg,#6366f1,#ec4899)"></div></div>
+                        </div>
+                        <span class="top-med-count">610 dona</span>
+                    </div>
+                    <div class="top-med-item">
+                        <span class="top-rank">4</span>
+                        <div class="top-med-info">
+                            <strong>Amoxicillin 500mg</strong>
+                            <div class="progress-bar"><div style="width:48%;background:linear-gradient(90deg,#6366f1,#ec4899)"></div></div>
+                        </div>
+                        <span class="top-med-count">480 dona</span>
+                    </div>
+                    <div class="top-med-item">
+                        <span class="top-rank">5</span>
+                        <div class="top-med-info">
+                            <strong>Azithromycin 250mg</strong>
+                            <div class="progress-bar"><div style="width:35%;background:linear-gradient(90deg,#6366f1,#ec4899)"></div></div>
+                        </div>
+                        <span class="top-med-count">350 dona</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

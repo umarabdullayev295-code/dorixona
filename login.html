@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCare - Tizimga Kirish</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo"><i class="fas fa-clinic-medical"></i> Pharma<span>Care</span></a>
+    </nav>
+
+    <main class="page-section" style="display:flex;justify-content:center;align-items:center;min-height:85vh;padding-top:6rem;">
+        <div class="login-box glass-panel">
+            <div style="text-align:center;margin-bottom:2rem;">
+                <div style="font-size:3rem;margin-bottom:1rem;">💊</div>
+                <h2>Tizimga Kirish</h2>
+                <p style="color:var(--text-main);margin-top:0.5rem;">Dorixona boshqaruv paneliga xush kelibsiz</p>
+            </div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label><i class="fas fa-user"></i> Login</label>
+                    <input type="text" id="loginUsername" placeholder="Loginingizni kiriting" required>
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-lock"></i> Parol</label>
+                    <input type="password" id="loginPassword" placeholder="Parolingizni kiriting" required>
+                </div>
+                <div id="loginError" style="color:#ef4444;font-size:0.9rem;margin:1rem 0;display:none;text-align:center;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);padding:0.8rem;border-radius:8px;">
+                    Login yoki parol noto'g'ri!
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top:1rem;">
+                    <span>Kirish</span><i class="fas fa-sign-in-alt"></i>
+                </button>
+            </form>
+            <div style="text-align:center;margin-top:1.5rem;color:var(--text-main);font-size:0.9rem;border-top:1px solid var(--border-color);padding-top:1.2rem;">
+                Test uchun ma'lumotlar:<br>
+                Login: <strong style="color:var(--text-main);cursor:pointer;" onclick="document.getElementById('loginUsername').value='User'">User</strong> &nbsp;|&nbsp;
+                Parol: <strong style="color:var(--text-main);cursor:pointer;" onclick="document.getElementById('loginPassword').value='user1234'">user1234</strong>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
