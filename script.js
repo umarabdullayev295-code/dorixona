@@ -349,7 +349,7 @@ function loadDashboard() {
   set('statTotalMeds', s.totalMeds + ' ta');
   set('statTodaySales', formatMoney(s.todaySales));
   set('statLowStockHighlight', s.lowStock + ' ta');
-  set('statLowStock', s.lowStock + ' ta mahsulot');
+  set('statLowStock', s.outStock + ' ta');
   set('statOutStock', s.outStock + ' ta');
   set('statMonthSales', formatMoney(s.monthSales));
   const hero = document.getElementById('heroMedCount');
