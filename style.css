@@ -307,6 +307,27 @@ body {
 /* Login box */
 .login-box { max-width: 400px; width: 100%; margin: 0 auto; text-align: left; }
 
+.search-toolbar { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap; align-items: center; }
+.search-bar-wide { max-width: 480px; flex: 1; min-width: 220px; position: relative; }
+.search-clear { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.25rem 0.5rem; }
+.search-clear:hover { color: var(--danger); }
+.search-hint { color: var(--text-muted); font-size: 0.9rem; }
+
+.pagination-wrap { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+.pagination-btns { display: flex; gap: 0.4rem; }
+.page-btn { background: #fff; border: 1px solid var(--border-color); min-width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-weight: 500; }
+.page-btn:hover:not(:disabled) { background: #f0f9ff; }
+.page-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.sale-search-wrap { position: relative; }
+.autocomplete-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-height: 260px; overflow-y: auto; z-index: 50; display: none; }
+.autocomplete-item { padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
+.autocomplete-item:hover { background: #f0f9ff; }
+.autocomplete-item strong { display: block; font-size: 0.9rem; }
+.autocomplete-item span { font-size: 0.8rem; color: var(--text-muted); }
+.autocomplete-empty { padding: 1rem; text-align: center; color: var(--text-muted); }
+
 /* Responsive */
 .mobile-menu-btn, .mobile-only-btn { display: none; }
 @media (max-width: 992px) {
