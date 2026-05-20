@@ -239,7 +239,7 @@ body {
 .status-badge { padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
 .status-badge.ok { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
 .status-badge.low { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
-.status-badge.expired { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.status-badge.out { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
 
 .actions { display: flex; gap: 0.4rem; }
 .act-btn { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--text-muted); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }

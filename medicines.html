@@ -44,13 +44,13 @@
             </div>
         </div>
 
-        <div class="filter-tabs">
-            <button class="filter-tab active" onclick="filterMeds('all', this)">Barchasi</button>
-            <button class="filter-tab" onclick="filterMeds('antibiotic', this)">Antibiotiklar</button>
-            <button class="filter-tab" onclick="filterMeds('vitamin', this)">Vitaminlar</button>
-            <button class="filter-tab" onclick="filterMeds('painkiller', this)">Og'riq qoldiruvchi</button>
-            <button class="filter-tab" onclick="filterMeds('cardiac', this)">Yurak dorilar</button>
-            <button class="filter-tab" onclick="filterMeds('expired', this)">⚠️ Muddati yaqin</button>
+        <div class="filter-tabs" id="categoryFilters">
+            <button type="button" class="filter-tab active" data-cat="all">Barchasi</button>
+            <button type="button" class="filter-tab" data-cat="antibiotic">Antibiotiklar</button>
+            <button type="button" class="filter-tab" data-cat="vitamin">Vitaminlar</button>
+            <button type="button" class="filter-tab" data-cat="painkiller">Og'riq qoldiruvchi</button>
+            <button type="button" class="filter-tab" data-cat="cardiac">Yurak dorilar</button>
+            <button type="button" class="filter-tab" data-cat="other">Boshqa</button>
         </div>
 
         <div class="medicines-table-wrap glass-panel">
@@ -182,6 +182,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=5"></script>
+    <script src="script.js?v=6"></script>
 </body>
 </html>

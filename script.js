@@ -5,11 +5,13 @@ const STORE = {
   TARGET: 200
 };
 
+const CAT_KEYS = ['antibiotic', 'vitamin', 'painkiller', 'cardiac', 'other'];
+
 const CAT_LABELS = {
   antibiotic: 'Antibiotik',
   vitamin: 'Vitamin',
   painkiller: "Og'riq qoldiruvchi",
-  cardiac: 'Yurak',
+  cardiac: 'Yurak dori',
   other: 'Boshqa'
 };
 
@@ -19,8 +21,26 @@ const CAT_FROM_UZ = {
   "Og'riq qoldiruvchi": 'painkiller',
   'Yurak dori': 'cardiac',
   Yurak: 'cardiac',
-  Boshqa: 'other'
+  Boshqa: 'other',
+  antibiotic: 'antibiotic',
+  vitamin: 'vitamin',
+  painkiller: 'painkiller',
+  cardiac: 'cardiac',
+  other: 'other'
 };
+
+function normalizeCategory(cat) {
+  if (!cat) return 'other';
+  const s = String(cat).trim();
+  if (CAT_KEYS.includes(s)) return s;
+  if (CAT_FROM_UZ[s]) return CAT_FROM_UZ[s];
+  const lower = s.toLowerCase();
+  if (lower.includes('antibiot')) return 'antibiotic';
+  if (lower.includes('vitamin')) return 'vitamin';
+  if (lower.includes('og\'riq') || lower.includes('ogriq')) return 'painkiller';
+  if (lower.includes('yurak')) return 'cardiac';
+  return 'other';
+}
 
 const BASE_NAMES = [
   'Paracetamol', 'Ibuprofen', 'Amoxicillin', 'Azithromycin', 'Ciprofloxacin',
@@ -48,13 +68,7 @@ function debounce(fn, ms = 250) {
 }
 
 function getStatus(med) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const exp = new Date(med.expiry_date);
-  const days = (exp - today) / 86400000;
-  if (med.quantity === 0) return { key: 'expired', label: 'Tugagan' };
-  if (days < 0) return { key: 'expired', label: "Muddati o'tgan" };
-  if (days < 60) return { key: 'expired', label: 'Muddati yaqin' };
+  if (med.quantity === 0) return { key: 'out', label: 'Tugagan' };
   if (med.quantity < 20) return { key: 'low', label: 'Kam qoldi' };
   return { key: 'ok', label: 'Yetarli' };
 }
@@ -96,7 +110,7 @@ function generateMedicines(count) {
       category: getCategoryKey(base),
       quantity: Math.floor(Math.random() * 500),
       price: 500 + Math.floor(Math.random() * 45000),
-      expiry_date: i % 15 === 0 ? randomDate(2025, 2025) : randomDate(2025, 2027)
+      expiry_date: randomDate(2026, 2028)
     });
   }
   return list;
@@ -119,8 +133,12 @@ const PharmaDB = {
     let meds = this.getMeds();
     if (!meds || meds.length < STORE.TARGET) {
       meds = generateMedicines(STORE.TARGET);
-      this.saveMeds(meds);
     }
+    meds = meds.map(m => ({
+      ...m,
+      category: normalizeCategory(m.category)
+    }));
+    this.saveMeds(meds);
     if (!localStorage.getItem(STORE.SALES_KEY)) {
       localStorage.setItem(STORE.SALES_KEY, JSON.stringify([]));
     }
@@ -166,14 +184,11 @@ const PharmaDB = {
     const today = new Date().toDateString();
     const todaySales = sales.filter(s => new Date(s.sold_at).toDateString() === today);
 
-    let nearExpiry = 0, lowStock = 0, outStock = 0;
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
+    let lowStock = 0, outStock = 0;
     meds.forEach(m => {
       const st = getStatus(m);
-      if (st.key === 'expired' && m.quantity > 0) nearExpiry++;
       if (st.key === 'low') lowStock++;
-      if (m.quantity === 0) outStock++;
+      if (st.key === 'out') outStock++;
     });
 
     const month = new Date().getMonth();
@@ -186,7 +201,6 @@ const PharmaDB = {
     return {
       totalMeds: meds.length,
       todaySales: todaySales.reduce((a, s) => a + s.total_price, 0),
-      nearExpiry,
       lowStock,
       outStock,
       monthSales: monthSales.reduce((a, s) => a + s.total_price, 0)
@@ -200,11 +214,9 @@ let medState = { q: '', category: 'all', page: 1, limit: 50 };
 function filterMedicinesList(meds) {
   const q = medState.q.trim().toLowerCase();
   return meds.filter(m => {
-    const st = getStatus(m);
-    const catLabel = CAT_LABELS[m.category] || m.category;
-    if (medState.category === 'expired') {
-      if (!(st.key === 'expired' || m.quantity === 0)) return false;
-    } else if (medState.category !== 'all' && m.category !== medState.category) {
+    const catKey = normalizeCategory(m.category);
+    const catLabel = CAT_LABELS[catKey] || catKey;
+    if (medState.category !== 'all' && catKey !== medState.category) {
       return false;
     }
     if (!q) return true;
@@ -250,10 +262,11 @@ function renderMedicinesTable() {
     tbody.innerHTML = pageItems.map((m, i) => {
       const st = getStatus(m);
       const num = isSearch ? i + 1 : (medState.page - 1) * medState.limit + i + 1;
-      return `<tr data-cat="${m.category}">
+      const catKey = normalizeCategory(m.category);
+      return `<tr data-cat="${catKey}">
         <td>${num}</td>
         <td><strong>${escapeHtml(m.name)}</strong><br><small>${escapeHtml(m.form)}</small></td>
-        <td><span class="cat-badge ${m.category}">${escapeHtml(CAT_LABELS[m.category])}</span></td>
+        <td><span class="cat-badge ${catKey}">${escapeHtml(CAT_LABELS[catKey])}</span></td>
         <td>${m.quantity} dona</td>
         <td>${formatMoney(m.price)}</td>
         <td>${m.expiry_date}</td>
@@ -292,11 +305,22 @@ function goMedPage(p) {
 }
 
 function filterMeds(cat, btn) {
-  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
   medState.category = cat;
   medState.page = 1;
+  document.querySelectorAll('.filter-tab').forEach(b => {
+    b.classList.toggle('active', b === btn || b.dataset.cat === cat);
+  });
   renderMedicinesTable();
+}
+
+function setupCategoryFilters() {
+  const wrap = document.getElementById('categoryFilters');
+  if (!wrap) return;
+  wrap.addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-tab');
+    if (!btn) return;
+    filterMeds(btn.dataset.cat || 'all', btn);
+  });
 }
 
 function openEditModal(id) {
@@ -305,7 +329,7 @@ function openEditModal(id) {
   document.getElementById('editMedId').value = m.id;
   document.getElementById('editMedName').value = m.name;
   document.getElementById('editMedFormType').value = m.form;
-  document.getElementById('editMedCategory').value = CAT_LABELS[m.category] || 'Boshqa';
+  document.getElementById('editMedCategory').value = CAT_LABELS[normalizeCategory(m.category)] || 'Boshqa';
   document.getElementById('editMedQty').value = m.quantity;
   document.getElementById('editMedPrice').value = m.price;
   document.getElementById('editMedExpiry').value = m.expiry_date;
@@ -324,7 +348,7 @@ function loadDashboard() {
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
   set('statTotalMeds', s.totalMeds + ' ta');
   set('statTodaySales', formatMoney(s.todaySales));
-  set('statNearExpiry', s.nearExpiry + ' ta dori');
+  set('statLowStockHighlight', s.lowStock + ' ta');
   set('statLowStock', s.lowStock + ' ta mahsulot');
   set('statOutStock', s.outStock + ' ta');
   set('statMonthSales', formatMoney(s.monthSales));
@@ -476,6 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
         medSearch.focus();
       });
     }
+    setupCategoryFilters();
     renderMedicinesTable();
   }
 
@@ -564,4 +589,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (document.getElementById('statTotalMeds')) loadDashboard();
+
+  window.filterMeds = filterMeds;
+  window.goMedPage = goMedPage;
+  window.openEditModal = openEditModal;
+  window.deleteMedicine = deleteMedicine;
 });
